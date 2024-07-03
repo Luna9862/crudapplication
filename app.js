@@ -9,7 +9,7 @@ app.use(express.json());
 let items = [];
 
 // POST route to add a new item
-app.post('/items', (req, res, next) => {
+app.post('/items', (req, res) => {
     const newItem = req.body;
     console.log('item recieved',newItem)
     if (!newItem.name) {
@@ -26,7 +26,7 @@ app.get('/items', (req, res) => {
 });
 
 // GET route to retrieve a single item by its identifier
-app.get('/items/:id', (req, res, next) => {
+app.get('/items/:id', (req, res) => {
     const itemId = parseInt(req.params.id);
     const item = items.find(item => item.id === itemId);
     if (!item) {
@@ -36,7 +36,7 @@ app.get('/items/:id', (req, res, next) => {
 });
 
 // PUT route to update an item by its identifier
-app.put('/items/:id', (req, res, next) => {
+app.put('/items/:id', (req, res) => {
     const itemId = parseInt(req.params.id);
     let updatedItem = req.body;
     let itemIndex = items.findIndex(item => item.id === itemId);
@@ -50,14 +50,14 @@ app.put('/items/:id', (req, res, next) => {
 });
 
 // DELETE route to delete an item by its identifier
-app.delete('/items/:id', (req, res, next) => {
+app.delete('/items/:id', (req, res) => {
     const itemId = parseInt(req.params.id);
     items = items.filter(item => item.id !== itemId);
     res.status(204).send();
 });
 
 // Error handling middleware
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
     console.error(err.stack);
     res.status(500).send('Something broke!');
 });
